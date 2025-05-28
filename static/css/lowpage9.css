@@ -1,0 +1,236 @@
+body {
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.screen {
+  width: 356px;
+  height: 556px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px solid black;
+  border-radius: 12px;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  margin-left: 2px;
+}
+
+.clinic-name {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.datetime {
+  text-align: right;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.divider1 {
+  width: 100%;
+  height: 2px;
+  margin: 5px 0;
+  background-color: #03cf5c;
+}
+
+.tracking-info {
+  text-align: center;
+  margin: 10px auto;
+  padding: 5px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.info-guide {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 700;
+  margin: 30px 0;
+}
+
+.divider2 {
+  width: 100%;
+  height: 2px;
+  margin: 5px auto;
+  background-color: #03cf5c;
+  position: absolute;
+  top: 41.5%;
+}
+
+.document-box div:first-child {
+  font-weight: bold;
+}
+
+.document-container {
+  position: relative;
+  width: 100%;
+}
+
+.document-box {
+  position: absolute;
+  width: 90%;
+  border: 2px solid #03cf5c;
+  border-radius: 15px;
+  padding: 24px;
+  margin: 12px auto;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #f7fff8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.document-box.selected {
+  border-color: #028e3c;
+  background-color: #d3f5e1;
+  box-shadow: 0 0 5px #028e3c;
+}
+
+.document-box:active {
+  transform: scale(0.98);
+}
+
+.sub-text {
+  font-size: 16px;
+  color: #555;
+}
+
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.back, .next {
+  width: 120px;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.back:hover, .next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.back:active, .next:active {
+  transform: translateY(2px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back {
+  background-color: #e0e0e0;
+  color: #555;
+}
+
+.next {
+  background-color: #03cf5c;
+  color: white;
+}
+
+.home-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background: none;
+  border: none;
+}
+
+.home-icon {
+  width: 32px;
+  height: 32px;
+}
+
+/* 팝업 스타일 */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  min-width: 280px;
+  max-width: 80%; /* 팝업 너비 조절 */
+}
+
+.popup-content p {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.popup-content button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #03cf5c;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.popup-content button:hover {
+  background-color: #028e3c;
+}
+
+.popup-content button:active {
+  background-color: #026530;
+}
