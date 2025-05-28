@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>낮은 UI 모드</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lowpage1.css') }}">
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+      </div>
+    </header>
+
+    <!-- 구분선 -->
+    <div class="divider1"></div>
+
+    <!-- 안내 영역 -->
+    <div class="tracking-info">
+      <h2>
+        아이트래킹 모드 
+        <span class="on-icon-container">
+          <img src="{{ url_for('static', filename='img/on.png') }}" alt="ON" class="on-icon">
+        </span>
+      </h2>
+      <p class="info-item">1. 1초간 버튼을 응시하면 <span class="highlight">클릭</span> 됩니다.</p>
+      <p class="info-item"><strong>2. 5초간 얼굴을 인식할 수 없을 경우</strong><br>
+        <span class="green-text">&nbsp&nbsp&nbsp&nbsp기본 화면</span>
+        <span class="nomal-text">으로 돌아갑니다.</span>
+      </p>
+    </div>
+
+    <!-- 중앙 안내문 -->
+    <div class="notice-box">
+      병원에 처음 방문하신 분은 데스크로 와주세요.
+    </div>
+
+        <!-- 구분선 -->
+        <div class="divider2"></div>
+
+    <!-- 버튼 영역 -->
+    <div class="button-area">
+      <a href="{{ url_for('lowpage2') }}" class="btn">
+        <img src="{{ url_for('static', filename='img/waiting-room.png') }}" alt="접수 아이콘">
+        <span>접수</span>
+      </a>
+      <a href="{{ url_for('lowpage7') }}" class="btn">
+        <img src="{{ url_for('static', filename='img/documents.png') }}" alt="서류발급 아이콘">
+        <span>서류발급</span>
+      </a>
+    </div>
+
+    <!-- 홈 버튼 -->
+    <a href="{{ url_for('lowpage1') }}" class="home-btn">
+      <img src="{{ url_for('static', filename='img/home-button.png') }}" alt="홈" class="home-icon">
+    </a>
+  </div>
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+      const date = now.toLocaleDateString('ko-KR');
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>

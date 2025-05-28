@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>서류 선택</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lowpage10.css') }}">
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+      </div>
+    </header>
+
+    <div class="divider1"></div>
+
+    <div class="tracking-info">
+      <h2>
+        아이트래킹 모드 
+        <span class="on-icon-container">
+          <img src="{{ url_for('static', filename='img/on.png') }}" alt="ON" class="on-icon">
+        </span>
+      </h2>
+    </div>
+
+    <div class="info-guide">
+      <h2><strong>발급하실 서류</strong><span>를 선택해주세요.</span></h2>
+    </div>
+
+    <div class="divider2"></div>
+
+    <div class="document-box" onclick="selectBox(this)" style="top: 43%; left: 5%;">
+      <div>2023.02.03 (금)</div>
+      <div class="sub-text">김닥터 선생님 진료</div>
+    </div>
+    
+    <div class="document-box" onclick="selectBox(this)" style="top: 54%; left: 5%;">
+      <div>2024.01.08 (월)</div>
+      <div class="sub-text">강닥터 선생님 진료</div>
+    </div>
+    
+    <div class="document-box" onclick="selectBox(this)" style="top: 65%; left: 5%;">
+      <div>2024.05.23 (목)</div>
+      <div class="sub-text">강닥터 선생님 진료</div>
+    </div>
+    
+    <div class="document-box" onclick="selectBox(this)" style="top: 76%; left: 5%;">
+      <div>2025.04.03 (목)</div>
+      <div class="sub-text">박닥터 선생님 진료</div>
+    </div>
+
+    <div class="footer-buttons">
+      <a href="{{ url_for('lowpage9') }}" class="back">이전</a>
+      <button class="next" id="nextBtn">다음</button>
+    </div>
+
+    <a href="{{ url_for('lowpage1') }}" class="home-btn">
+      <img src="{{ url_for('static', filename='img/home-button.png') }}" alt="홈" class="home-icon">
+    </a>
+
+    <!-- 팝업 -->
+    <div class="popup" id="alertPopup">
+      <div class="popup-content">
+        <p id="popupMessage"></p>
+        <div id="popupBtnContainer"></div>
+      </div>
+    </div>
+
+    <script>
+      let selectedBox = null;
+
+      // 실시간 시간 갱신 함수
+      function updateTime() {
+        const now = new Date();
+        const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+        const date = now.toLocaleDateString('ko-KR');
+        const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;
+      }
+
+      // 페이지 로드 시 즉시 실행하고, 매초 갱신
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      // 선택 박스 강조 (중복 선택 방지 + 해제 가능)
+      function selectBox(selected) {
+        if (selected === selectedBox) {
+          selected.classList.remove('selected');
+          selectedBox = null;
+          return;
+        }
+
+        const boxes = document.querySelectorAll('.document-box');
+        boxes.forEach(box => box.classList.remove('selected'));
+        selected.classList.add('selected');
+        selectedBox = selected;
+      }
+
+      // 팝업 열기
+      function showPopup(message, showButtons = false) {
+        const popup = document.getElementById('alertPopup');
+        const popupMessage = document.getElementById('popupMessage');
+        const popupBtnContainer = document.getElementById('popupBtnContainer');
+
+        popupMessage.innerHTML = message;
+
+        if (showButtons) {
+          popupBtnContainer.innerHTML = `
+            <button class="popup-btn cancel" id="popupCancel">취소하기</button>
+            <button class="popup-btn confirm" id="popupConfirm">접수하기</button>`;
+          document.getElementById('popupCancel').addEventListener('click', closePopup);
+          document.getElementById('popupConfirm').addEventListener('click', () => {
+            location.href = "{{ url_for('lowpage11') }}";
+          });
+        } else {
+          popupBtnContainer.innerHTML = `<button class="popup-btn" id="popupClose">확인</button>`;
+          document.getElementById('popupClose').addEventListener('click', closePopup);
+        }
+
+        popup.style.display = 'flex';
+      }
+
+      // 팝업 닫기
+      function closePopup() {
+        const popup = document.getElementById('alertPopup');
+        popup.style.display = 'none';
+      }
+
+      // 다음 버튼 클릭 시
+      document.getElementById('nextBtn').addEventListener('click', () => {
+        if (selectedBox) {
+          showPopup(`
+            <div>발급 시 비용 3,000원이 발생합니다.</div>
+            <div class="sub-line">계속 진행하시겠습니까?</div>
+            <div>&nbsp</div>`, true);
+        } else {
+          showPopup("발급 받으실 서류를 선택해주세요.");
+        }
+      });
+    </script>
+  </div>
+</body>
+</html>

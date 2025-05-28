@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>접수/서류발급</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page1.css') }}">
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <!-- 수정: 십자가 모양 로고 추가 -->
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <!-- 수정: 시간과 홈 버튼 순서 조정 -->
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+        <button class="home-btn" onclick="location.href='{{ url_for('page1') }}'">
+          <img src="{{ url_for('static', filename='img/home-button.png') }}" alt="처음으로" class="home-icon">
+        </button>
+      </div>
+    </header>
+
+    <!-- 구분선 추가 -->
+    <div class="divider"></div>
+
+    <div class="notice">병원에 처음 방문하신 분은 데스크로 와주세요.</div>
+
+    <main>
+      <h1>여기에서<br><span class="highlight">접수/서류발급</span>하세요!</h1>
+      <div class="buttons">
+        <a href="{{ url_for('page2') }}" class="btn">
+          <img src="{{ url_for('static', filename='img/waiting-room.png') }}" alt="접수 아이콘">
+          <span>접수</span>
+        </a>
+        <a href="{{ url_for('page7') }}" class="btn">
+          <img src="{{ url_for('static', filename='img/documents.png') }}" alt="서류 아이콘">
+          <span>서류발급</span>
+        </a>
+      </div>
+      <div class="info-box">
+        <ul>
+          <li>·발열·기침 환자는 반드시 마스크 착용 후 내원해 주세요.</li>
+          <li>·진단서 발급 시 비용이 발생합니다.</li>
+          <li>·수납 업무는 데스크로 와주세요.</li>
+          <li>·독감·폐렴구균 예방접종 시행 중입니다.<br>·데스크에 문의해 주세요.</li>
+        </ul>
+      </div>
+    </main>
+  </div>
+  <script>
+    // 실시간 시간 갱신 함수
+    function updateTime() {
+      const now = new Date();
+      const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+      const date = now.toLocaleDateString('ko-KR');
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;  // 수정: 줄바꿈 추가
+    }
+
+    // 페이지 로드 시 즉시 실행하고, 매초 갱신
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>

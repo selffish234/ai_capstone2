@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>휴대전화 입력</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page2.css') }}">
+  <style>
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      width: 260px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .popup-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+
+    .popup-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #cancelBtn {
+      background-color: #e0e0e0;
+      color: black;
+    }
+
+    #agreeBtn {
+      background-color: #03cf5c;
+      color: white;
+    }
+
+    .popup-content button {
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #03cf5c;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .screen {
+      border: 2px solid black;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+        <button class="home-btn" onclick="location.href='{{ url_for('page1') }}'">
+          <img src="{{ url_for('static', filename='img/home-button.png') }}" alt="처음으로" class="home-icon">
+        </button>
+      </div>
+    </header>
+
+    <div class="divider"></div>
+
+    <main>
+      <h2><strong>휴대전화번호</strong>를 입력해주세요.</h2>
+      <div class="input-display" id="phoneDisplay"></div>
+
+      <div class="keypad">
+        <button class="key">1</button>
+        <button class="key">2</button>
+        <button class="key">3</button>
+        <button class="key">4</button>
+        <button class="key">5</button>
+        <button class="key">6</button>
+        <button class="key">7</button>
+        <button class="key">8</button>
+        <button class="key">9</button>
+        <button class="key delete">&#x2715;</button>
+        <button class="key">0</button>
+        <button class="key clear">전체지움</button>
+      </div>
+
+      <div class="footer-buttons">
+        <a href="{{ url_for('page1') }}" class="back">이전</a>
+        <button class="next" id="nextBtn" data-url="{{ url_for('page8') }}">다음</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- 일반 경고 팝업 -->
+  <div class="popup" id="alertPopup">
+    <div class="popup-content">
+      <p id="popupMessage">올바르게 입력해주세요.</p>
+      <button id="popupClose">확인</button>
+    </div>
+  </div>
+
+  <!-- 개인정보 수집 동의 팝업 -->
+  <div class="popup" id="agreePopup">
+    <div class="popup-content">
+      <p><strong>개인정보수집 동의 (필수)</strong></p>
+      <p><a href="#" style="color: purple; font-size: 14px;">약관보기</a></p>
+      <div class="popup-buttons">
+        <button id="cancelBtn">취소</button>
+        <button id="agreeBtn">동의</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const display = document.getElementById('phoneDisplay');
+      const keys = document.querySelectorAll('.key');
+      const nextBtn = document.getElementById('nextBtn');
+      const popup = document.getElementById('alertPopup');
+      const popupClose = document.getElementById('popupClose');
+      const popupMessage = document.getElementById('popupMessage');
+      const agreePopup = document.getElementById('agreePopup');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const agreeBtn = document.getElementById('agreeBtn');
+
+      let input = '';
+      let isConsentGiven = false;
+
+      function formatPhone(number) {
+        const onlyNums = number.replace(/\D/g, '');
+        const match = onlyNums.match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+        return [match[1], match[2], match[3]].filter(Boolean).join('-');
+      }
+
+      function isPhoneComplete(numStr) {
+        return /^\d{3}-\d{4}-\d{4}$/.test(numStr);
+      }
+
+      function showPopup(message) {
+        popupMessage.textContent = message;
+        popup.style.display = 'flex';
+      }
+
+      function closePopup() {
+        popup.style.display = 'none';
+      }
+
+      keys.forEach(key => {
+        key.addEventListener('click', () => {
+          const val = key.textContent;
+          if (key.classList.contains('delete')) {
+            input = input.slice(0, -1);
+          } else if (key.classList.contains('clear')) {
+            input = '';
+          } else if (input.replace(/\D/g, '').length < 11) {
+            input += val;
+          }
+          const formatted = formatPhone(input);
+          display.textContent = formatted;
+        });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const formatted = formatPhone(input);
+
+        if (!isPhoneComplete(formatted)) {
+          showPopup("번호가 일치하지 않습니다. 올바르게 입력해주세요.");
+          return;
+        }
+
+        if (!isConsentGiven) {
+          agreePopup.style.display = 'flex';
+          return;
+        }
+
+        const targetUrl = nextBtn.dataset.url;
+        window.location.href = targetUrl;
+      });
+
+      popupClose.addEventListener('click', closePopup);
+
+      cancelBtn.addEventListener('click', () => {
+        agreePopup.style.display = 'none';
+      });
+
+      agreeBtn.addEventListener('click', () => {
+        isConsentGiven = true;
+        agreePopup.style.display = 'none';
+        nextBtn.click(); // 다시 next 트리거
+      });
+    });
+
+    // 시간 표시
+    function updateTime() {
+      const now = new Date();
+      const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+      const date = now.toLocaleDateString('ko-KR');
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>

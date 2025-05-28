@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>본인 정보 선택</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page3.css') }}">
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <!-- 수정: 십자가 모양 로고 추가 -->
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <!-- 수정: 시간과 홈 버튼 순서 조정 -->
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+        <button class="home-btn" onclick="location.href='{{ url_for('page1') }}'">
+          <img src="{{ url_for('static', filename='img/home-button.png') }}" alt="처음으로" class="home-icon">
+        </button>
+      </div>
+    </header>
+
+    <!-- 구분선 추가 -->
+    <div class="divider"></div>
+
+    <main>
+      <h2><strong>본인정보</strong>를 선택해주세요.</h2>
+
+      <div class="info-box" onclick="toggleSelection(this)" id="infoBox">
+        <div><strong id="userName"></strong></div>
+        <div id="userID"></div>
+      </div>
+    </main>
+
+    <div class="footer-buttons">
+      <a href="{{ url_for('page2') }}" class="back">이전</a>
+      <a href="#" class="next" id="nextBtn">다음</a>
+    </div>
+  </div>
+
+  <!-- 팝업 -->
+  <div class="popup" id="alertPopup">
+    <div class="popup-content">
+      <p>본인정보를 클릭해주세요.</p>
+      <button id="popupClose">확인</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedBox = null;
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateRandomName() {
+      const lastNames = ["김", "박", "강", "이", "황", "최", "한"];
+      const randomLastName = lastNames[getRandomInt(0, lastNames.length - 1)];
+      return randomLastName + "OO";
+    }
+
+    function generateRandomID() {
+      const year = getRandomInt(0, 99).toString().padStart(2, "0");
+      const month = getRandomInt(1, 12).toString().padStart(2, "0");
+      const day = getRandomInt(1, 28).toString().padStart(2, "0");
+      const genderDigit = getRandomInt(1, 4);
+      return `${year}${month}${day} - ${genderDigit}xxxxxx`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const userName = generateRandomName();
+      const userID = generateRandomID();
+
+      document.getElementById("userName").textContent = userName;
+      document.getElementById("userID").textContent = userID;
+    });
+
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    function toggleSelection(box) {
+      box.classList.toggle('selected');
+      selectedBox = box.classList.contains('selected') ? box : null;
+    }
+
+    // 팝업 열기
+    function showPopup() {
+      const popup = document.getElementById('alertPopup');
+      popup.style.display = 'flex';
+    }
+
+    // 팝업 닫기
+    function closePopup() {
+      const popup = document.getElementById('alertPopup');
+      popup.style.display = 'none';
+    }
+
+    // 다음 버튼 클릭 시
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (!selectedBox) {
+        showPopup();
+      } else {
+        location.href = "{{ url_for('page4') }}";
+      }
+    });
+
+    // 팝업 닫기 버튼 클릭 시
+    document.getElementById('popupClose').addEventListener('click', closePopup);
+    
+    // 실시간 시간 갱신 함수
+    function updateTime() {
+      const now = new Date();
+      const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+      const date = now.toLocaleDateString('ko-KR');
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;  // 수정: 줄바꿈 추가
+    }
+  </script>
+</body>
+</html>

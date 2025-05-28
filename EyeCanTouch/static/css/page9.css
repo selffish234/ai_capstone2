@@ -1,0 +1,204 @@
+body {
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+}
+
+/* 화면 스타일 */
+.screen {
+  width: 356px;
+  height: 556px;
+  background-color: #ffffff;
+  margin: 0 auto;
+  padding: 0px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px solid black;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* 상단 바 스타일 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+/* 수정: 십자가 로고 스타일 */
+.logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  margin-left: 2px;
+}
+
+.clinic-name {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+/* 수정: 시간과 홈 버튼 배치 조정 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.datetime {
+  text-align: right;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.home-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.home-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  margin: 5px auto;
+  background-color: #03cf5c;
+}
+
+main {
+  margin-top: 24px;
+  text-align: center;
+}
+
+main h2 {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+strong {
+  font-weight: bold;
+}
+
+/* 서류 선택 박스 스타일 */
+.info-box {
+  border: 2px solid #03cf5c;
+  border-radius: 15px;
+  padding: 24px;
+  width: 90%;
+  margin: 12px auto;
+  font-size: 22px;
+  font-weight: 400;
+  background-color: #f7fff8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 선택된 박스 스타일 */
+.info-box.selected {
+  border-color: #028e3c;
+  background-color: #d3f5e1;
+  box-shadow: 0 0 5px #028e3c;
+}
+
+/* 버튼 스타일 */
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  position: absolute;
+  bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 이전-다음 버튼과 텍스트에 대한 정보 */
+.back,
+.next {
+  width: 120px;
+  padding: 10px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;  /* 버튼 사이 간격 조정 */
+  /* 입체감 있는 그림자 효과 추가 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.2s ease;
+}
+
+.back:hover,
+.next:hover {
+  transform: translateY(-2px);  /* 살짝 위로 올라가는 효과 */
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.back:active,
+.next:active {
+  transform: translateY(2px);  /* 클릭 시 살짝 내려가는 효과 */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.back {
+  background-color: #e0e0e0;
+  color: #555;
+}
+
+.next {
+  background-color: #03cf5c;
+  color: white;
+}
+
+/* 팝업 스타일 */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  min-width: 280px;
+}
+
+.popup-content button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #03cf5c;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}

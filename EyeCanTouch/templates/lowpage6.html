@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>접수 및 내원 확인 완료</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lowpage6.css') }}">
+</head>
+<body>
+  <div class="screen">
+    <header class="header">
+      <div class="header-left">
+        <img src="{{ url_for('static', filename='img/cross.png') }}" alt="로고" class="logo">
+        <div class="clinic-name">OO 이비인후과</div>
+      </div>
+      <div class="header-right">
+        <div class="datetime" id="currentTime"></div>
+      </div>
+    </header>
+
+    <!-- 구분선 -->
+    <div class="divider1"></div>
+
+    <!-- 안내 영역 -->
+    <div class="tracking-info">
+      <h2>
+        아이트래킹 모드 
+        <span class="on-icon-container">
+          <img src="{{ url_for('static', filename='img/on.png') }}" alt="ON" class="on-icon">
+        </span>
+      </h2>
+    </div>
+
+    <!-- 접수 완료 안내 -->
+    <div class="info-guide">
+      <h2><strong>접수 및 내원 확인 완료</strong></h2>
+    </div>
+
+    <!-- 구분선 -->
+    <div class="divider2"></div>
+
+    <main>
+      <div class="check-icon">
+        <img src="{{ url_for('static', filename='img/check.png') }}" alt="완료" class="check-image">
+      </div>
+      <button class="home-btn-2" onclick="location.href='{{ url_for('lowpage1') }}'">처음으로</button>
+      <p id="countdown">5초 뒤 첫화면으로 이동합니다.</p>
+    </main>
+  </div>
+
+  <script>
+    // 실시간 시간 갱신 함수
+    function updateTime() {
+      const now = new Date();
+      const day = now.toLocaleDateString('ko-KR', { weekday: 'long' });
+      const date = now.toLocaleDateString('ko-KR');
+      const time = now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('currentTime').innerHTML = `${date} (${day})<br>${time}`;
+    }
+
+    // 페이지 로드 시 즉시 실행하고, 매초 갱신
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // 카운트다운 함수
+    let countdown = 5;
+    function updateCountdown() {
+      if (countdown > 0) {
+        document.getElementById('countdown').textContent = `${countdown}초 뒤 첫화면으로 이동합니다.`;
+        countdown--;
+      } else {
+        location.href = "{{ url_for('lowpage1') }}";
+      }
+    }
+
+    // 카운트다운 시작
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
