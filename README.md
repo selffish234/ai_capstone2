@@ -81,3 +81,39 @@ pip install -r requirements.txt
 
 # 2. 메인 통합 스크립트 실행
 python main_loop.py
+```
+### 🎥 시연 결과
+
+- **일반 모드:** 성인 사용자가 접근 시 기본 UI 유지
+- **낮은 모드:** 휠체어 사용자가 접근 시 하단 UI로 자동 전환 및 아이트래킹 활성화
+- **시선 클릭:** 손을 대지 않고 눈동자 움직임만으로 메뉴 선택 및 결제 완료
+
+---
+
+## ⚖️ License & Disclaimer (필수 고지 사항)
+
+본 프로젝트는 **Eyeware Tech SA**의 **Beam Eye Tracker SDK**를 사용하여 개발되었습니다.
+
+- *[Eyeware – Beam SDK Licensing Terms](https://beam.eyeware.tech/license.html)*에 의거하여 아래 사항을 명시합니다.
+
+### 1. Intellectual Property (지적 재산권)
+
+본 프로젝트에 포함된 시선 추적(Eye-Tracking) 기술 및 관련 소프트웨어(Beam Solution)에 대한 모든 저작권 및 지적 재산권은 **Eyeware Tech SA** 및 해당 라이선스 제공자에게 귀속됩니다. (Section 5.1 Ownership)
+
+### 2. Medical Device Disclaimer (의료 기기 면책 조항)
+
+**Beam Eye Tracker SDK Licensing Terms Section 3.4**에 따라 다음 내용을 사용자와 방문자에게 고지합니다.
+
+> "본 소프트웨어와 Beam Eye Tracker SDK는 의료 기기가 아닙니다. 또한 이는 전문적인 의학적 조언, 진단 또는 치료를 대체할 수 없습니다."
+> 
+> 
+> **"The SDK and Beam Solution are not medical devices, and they are not substitutes for professional medical advice, diagnosis or treatment."**
+> 
+
+### 3. Privacy Notice (개인정보 및 데이터 처리 고지)
+
+**Licensing Terms Section 4.2 (Privacy)** 준수를 위해 데이터 처리 방침을 안내합니다.
+
+- **데이터 수집 목적:** 본 소프트웨어는 오직 사용자의 시선 위치 추적(Gaze Tracking) 및 UI 자동 전환을 위한 얼굴 인식 목적으로만 카메라 데이터를 실시간으로 처리합니다.
+- **데이터 처리 방식:** 모든 영상 데이터는 사용자의 **로컬 PC(Local PC)** 내에서만 연산되며, 사용자의 명시적인 동의 없이 외부 서버로 전송되거나 녹화/저장되지 않습니다.
+- **표시:** 시선 추적 기능이 활성화될 때 화면상의 UI(예: 시선 커서, 아이트래킹 모드 ON 표시 등)를 통해 기능 작동 여부를 시각적으로 확인할 수 있습니다.
